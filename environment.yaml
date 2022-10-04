@@ -1,0 +1,47 @@
+name: phd_ph5x-02_emulator_deepOPF_pypsa
+channels:
+  - pytorch
+  - conda-forge
+  - gurobi
+  - nodefaults
+dependencies:
+  # Main
+  - python>=3.9
+  - numpy >= 1.20
+  - scipy >= 1.7
+  - pytorch>=1.12.0
+  - dask
+  # - cpuonly
+  - gurobi
+  - xarray
+  - netcdf4
+
+  # Utilities
+  - tqdm
+
+  # # Power
+  # - pypsa
+
+  # # Spatial and graph
+  # - networkx
+  # - shapely
+  # - fiona
+  # - geopandas>=0.11
+  # - cartopy
+
+  # Basic ML?
+  - scikit-learn
+
+
+
+
+  # Plotting and development
+  - ipykernel
+  - jupyter
+  - matplotlib >=3.0
+  - seaborn >= 0.10
+  - pandas >= 0.9
+
+
+  # - pip:
+  #   - pypower
