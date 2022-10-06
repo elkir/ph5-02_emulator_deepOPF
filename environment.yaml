@@ -20,7 +20,7 @@ dependencies:
   - tqdm
 
   # # Power
-  # - pypsa
+  - pypsa
 
   # # Spatial and graph
   # - networkx
