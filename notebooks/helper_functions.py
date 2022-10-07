@@ -158,6 +158,7 @@ def network_get_nonempty_timeseries(n):
     index = [(k,i) for k in keys_t for i in index_of_full_dfs(k,n)]
     return index # [(attribute, df_name),...]
 
+
 def n_extract_values(n, index):
     '''
     Extracts timeseries specified in index (list of (atribute,column,Nvars) pairs)
