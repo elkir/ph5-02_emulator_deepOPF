@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import pandas as pd
 
 import matplotlib
 from matplotlib.patches import RegularPolygon
@@ -140,3 +141,26 @@ def network_summary(n):
     print(f"{color.BOLD}{color.YELLOW}{n.lines.shape[0]} lines and {n.links.shape[0]} links{color.END}")
     print_t(n.lines_t)
     print_t(n.links_t)
+    
+def index_of_full_dfs(k,n):
+    # check network atribute that is a collection of DFs and return the non-empty ones
+    dfs = getattr(n,k)
+    a=[]
+    for k in (dfs.keys()):
+        if not dfs[k].empty:
+             a.append(k)
+    return a
+
+    
+def network_get_nonempty_timeseries(n):
+    keys = n.__dict__.keys()
+    keys_t = [k for k in keys if "_t" == k[-2:]]
+    index = [(k,i) for k in keys_t for i in index_of_full_dfs(k,n)]
+    return index # [(attribute, df_name),...]
+
+def n_extract_values(n, index):
+    '''
+    Extracts timeseries specified in index (list of (atribute,column,Nvars) pairs)
+    Adds a prefix to column names as "attr:col: <name>"
+    ''' 
+    return pd.concat([getattr(n,c)[d].add_prefix(f"{c[:-2]}:{d}: ") for c,d,_ in index],axis=1)
