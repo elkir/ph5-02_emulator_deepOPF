@@ -5,6 +5,8 @@ import pandas as pd
 import matplotlib
 from matplotlib.patches import RegularPolygon
 
+import torch
+
 #####################################
 #### Plots
 #########################
@@ -165,3 +167,42 @@ def n_extract_values(n, index):
     Adds a prefix to column names as "attr:col: <name>"
     ''' 
     return pd.concat([getattr(n,c)[d].add_prefix(f"{c[:-2]}:{d}: ") for c,d,_ in index],axis=1)
+
+def plot_samples_train_val(y_train,outputs,y_val,outputs_val,
+                            color_base= "#4A17FF", colors = ["#FF0D2F","#E8630C"],
+                            n_samples=12, xlim=3, y_width = 200, random_seed=None,
+                            titles = ["training","validation"]
+                            ):
+    import random
+    
+    n_output = y_train.shape[1]
+    n_samples_val = y_val.shape[0]
+
+    if random_seed is not None:
+        random.seed(random_seed)
+    yrange = int(random.randrange(0,n_samples_val-y_width))+np.array([0,y_width])
+    features = random.sample(range(n_output),n_samples)
+    
+    with torch.no_grad():
+        plt.close()
+        fig = plt.figure(figsize=(18,5))
+        grid = fig.add_gridspec(n_samples,2,wspace=0,hspace=0)
+        ys = (y_train,y_val)
+        outs = (outputs,outputs_val)
+        
+        for j in range(2):
+            for i,  index  in enumerate(features):
+                ax = fig.add_subplot(grid[i,j])
+                ax.plot(range(*yrange),ys[j][slice(*yrange),index],color_base)
+                ax.plot(range(*yrange),outs[j][slice(*yrange),index],colors[j])
+            # ax.set_ylim(-xlim,xlim)
+                ax.set_xlim(*yrange)
+                if i==0: ax.set_title(titles[j])
+                if j==1: 
+                    ax.yaxis.set_label_position("right")
+                    ax.yaxis.tick_right()
+                ax.set(yticks=[])
+                ax.set_ylabel(index,rotation=0,horizontalalignment="center",verticalalignment="center_baseline",fontsize="large")
+        plt.close() # to avoid double plotting in jupyter
+        return fig, grid
+
