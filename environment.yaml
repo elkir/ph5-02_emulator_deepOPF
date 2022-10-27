@@ -1,4 +1,4 @@
-name: phd_ph5x-02_emulator_deepOPF_pypsa
+name: phd_ph5-1_emulator_deepOPF_pypsa
 channels:
   - pytorch
   - conda-forge

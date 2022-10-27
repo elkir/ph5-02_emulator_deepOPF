@@ -168,3 +168,4 @@ cython_debug/
 
 # VS COde
 *.code-workspace
+.vscode/settings.json
