@@ -1,6 +1,6 @@
 ## Custom
 runs/
-model/
+models/
 data/
 *.png
 
@@ -167,6 +167,6 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-# VS COde
+# VS Code
 *.code-workspace
 .vscode/settings.json
