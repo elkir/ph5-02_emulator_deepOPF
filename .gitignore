@@ -1,5 +1,6 @@
 ## Custom
 runs/
+model/
 data/
 *.png
 
