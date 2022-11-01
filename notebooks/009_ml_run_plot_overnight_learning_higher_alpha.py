@@ -22,10 +22,12 @@ matplotlib.rcParams['figure.figsize'] = (12,4)
 
 from helper_functions import plot_samples_train_val
 
-# Logging ML
+# Logging ML setup
 from torch.utils.tensorboard import SummaryWriter
 import wandb
 
+
+# All the config that is also stored in W&B
 # %%
 config = dict(    
     learning_rate =5e-3,
@@ -58,7 +60,7 @@ param_save = "003_7_model_nn5_long_run"
 random_seed = 746435
 torch.manual_seed(random_seed)
 
-# %%
+# %% Specifying a file structure and where everything is
 dir_root = Path("../") # go to root of git repo
 dir_data = dir_root / "data"
 dir_data_ml= dir_data /"ml"
@@ -87,7 +89,7 @@ print("Otherwise all files present")
 
 
 # %% [markdown]
-# ### Load data
+# ### Load data and normalize
 
 # %%
 def read_all_dfs(filenames):
@@ -138,7 +140,7 @@ print("Data loaded:")
 print(n_input,n_output,n_samples_tr,n_samples_val, sep=", ")
 # train_loader = load
 
-# %%
+# %% check data normalized correctly
 if check_data_with_plots:
     n_min=min(n_samples_val,n_samples_tr)
     _=plt.plot(x_train[:n_min], "r", alpha = 0.1) # [:,38:192]
@@ -275,7 +277,7 @@ for epoch in range(config["epochs"]):
     if ((epoch+1) < 300 and (epoch+1) % 50 == 0) or ((epoch+1) % 200 ==0):
         print(f"Epoch [{epoch+1}], TLoss: { total_loss.item() :.7f}, MSELoss: { loss.item() :.7f}, Val_loss: {loss_val.item() :.5f}")
 
-# # Save and load only the model parameters (recommended).
+# # Save and load only the model parameters (recommended?).
 if use_wandb:
     param_save=wandb.run.id
 fpath_model_params = dir_models/f'{param_save}_params.ckpt'
